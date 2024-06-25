@@ -184,22 +184,21 @@ def main():
                 pg.display.update()
                 time.sleep(5)
                 return
-
-        for i in range(len(bombs)):
-            for j in range(len(beams)):
+        for i in range(len(bombs)): # ボムの当たり判定
+            for j in range(len(beams)): # ビームの当たり判定
                 if beams[j] is not None:
                     if bombs[i].rct.colliderect(beams[j].rct):
-                        bombs[i] = None  
-                        beams[j] = None
-                        score.score += 1                 
+                        bombs[i] = None # ボムの消去
+                        beams[j] = None # ビームの消去
+                        score.score += 1          
                         score.update(screen)
                         bird.change_img(6, screen)
 
-        for i in range(len(beams)):
+        for i in range(len(beams)): # 範囲外のビームの消去
             if check_bound(beams[i].rct) != (True, True):
                 beams.pop(i)
-        bombs = [bomb for bomb in bombs if bomb is not None]
-        beams = [beam for beam in beams if beam is not None]
+        bombs = [bomb for bomb in bombs if bomb is not None] # Noneのボムをリストから消去
+        beams = [beam for beam in beams if beam is not None] # Noneのビームをリストから消去
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
